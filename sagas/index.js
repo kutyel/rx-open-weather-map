@@ -4,7 +4,8 @@ import { select, all, call, put, fork, takeLatest } from 'redux-saga/effects'
 import { update } from '../actions'
 
 const getWeather = id =>
-  `http://api.openweathermap.org/data/2.5/weather?id=${id}&units=metric&APPID=4378ebdc6e77059597b81a189b7d2cae`
+  `http://api.openweathermap.org/data/2.5/weather?id=${id}&units=metric&APPID=${process
+    .env.WEATHER_API_KEY}`
 
 // Fetch data every 3 mins (180.000 milliseconds)
 function* getTemperatures() {
