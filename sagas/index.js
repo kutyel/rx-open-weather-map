@@ -1,11 +1,10 @@
+import { delay } from 'redux-saga'
 import { select, all, call, put, fork, takeLatest } from 'redux-saga/effects'
 
 import { update } from '../actions'
 
 const getWeather = id =>
   `http://api.openweathermap.org/data/2.5/weather?id=${id}&units=metric&APPID=4378ebdc6e77059597b81a189b7d2cae`
-
-const delay = millis => new Promise(res => setTimeout(() => res(true), millis))
 
 // Fetch data every 3 mins (180.000 milliseconds)
 function* getTemperatures() {
