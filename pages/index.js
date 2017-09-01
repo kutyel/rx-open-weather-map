@@ -11,7 +11,7 @@ import {
   Geographies,
   Geography,
   Markers,
-  Marker,
+  Marker
 } from 'react-simple-maps'
 
 const POLLING_TIME_MS = 180000 // 3 min (3 * 60 * 1000)
@@ -27,7 +27,7 @@ const SOUTH_AMERICA = [
   'PER',
   'SUR',
   'URY',
-  'VEN',
+  'VEN'
 ]
 
 const cities = [
@@ -37,7 +37,7 @@ const cities = [
     name: 'Santiago',
     temp: 6,
     history: [],
-    coordinates: [-70.6693, -33.4489],
+    coordinates: [-70.6693, -33.4489]
   },
   {
     id: 3435910,
@@ -45,7 +45,7 @@ const cities = [
     name: 'Buenos Aires',
     temp: 16,
     history: [],
-    coordinates: [-58.3816, -34.6037],
+    coordinates: [-58.3816, -34.6037]
   },
   {
     id: 3936456,
@@ -53,7 +53,7 @@ const cities = [
     name: 'Lima',
     temp: 10.7,
     history: [],
-    coordinates: [-77.1278664, -12.0266034],
+    coordinates: [-77.1278664, -12.0266034]
   },
   {
     id: 3448439,
@@ -61,8 +61,8 @@ const cities = [
     name: 'São Paulo',
     temp: 13.82,
     history: [],
-    coordinates: [-46.875494, -23.6821604],
-  },
+    coordinates: [-46.875494, -23.6821604]
+  }
 ]
 
 const popScale = scaleLinear()
@@ -76,7 +76,7 @@ const popScale = scaleLinear()
     '#f9d057',
     '#f29e2e',
     '#e76818',
-    '#d7191c',
+    '#d7191c'
   ])
 
 const getWeather = id =>
@@ -86,7 +86,7 @@ const getWeather = id =>
 export default class extends Component {
   state = { cities }
 
-  async getTemperatures() {
+  async getTemperatures () {
     try {
       const responses = await Promise.all(
         this.state.cities.map(({ id }) => fetch(getWeather(id)))
@@ -94,7 +94,7 @@ export default class extends Component {
       const cities = await Promise.all(responses.map(res => res.json()))
       const temps = cities.map(({ main }) => main.temp)
       await this.setState(({ cities }) => ({
-        cities: cities.map((c, index) => ({ ...c, temp: temps[index] })),
+        cities: cities.map((c, index) => ({ ...c, temp: temps[index] }))
       }))
     } catch (err) {
       console.error(err)
@@ -108,17 +108,17 @@ export default class extends Component {
 
   componentWillUnmount = () => clearInterval(this.timer)
 
-  render = () => (
+  render = () =>
     <div
       style={{
         width: '100%',
         maxWidth: 980,
-        margin: '0 auto',
+        margin: '0 auto'
       }}
     >
       <ThemeProvider>
         <AppBar
-          title="OpenWeatherMap"
+          title='OpenWeatherMap'
           iconElementLeft={
             <IconButton>
               <Sun />
@@ -132,66 +132,64 @@ export default class extends Component {
         height={1000}
       >
         <ZoomableGroup center={[-60, -25]} disablePanning>
-          <Geographies geographyUrl="/static/world-50m.json">
+          <Geographies geographyUrl='/static/world-50m.json'>
             {(geographies, projection) =>
               geographies.map(
                 (geography, i) =>
-                  SOUTH_AMERICA.includes(geography.id) && (
-                    <Geography
-                      key={i}
-                      geography={geography}
-                      projection={projection}
-                      style={{
-                        default: {
-                          fill: '#ECEFF1',
-                          stroke: '#607D8B',
-                          strokeWidth: 0.75,
-                          outline: 'none',
-                        },
-                        hover: {
-                          fill: '#00bcd4',
-                          stroke: '#607D8B',
-                          strokeWidth: 0.75,
-                          outline: 'none',
-                        },
-                        pressed: {
-                          fill: '#00bcd4',
-                          stroke: '#607D8B',
-                          strokeWidth: 0.75,
-                          outline: 'none',
-                        },
-                      }}
-                    />
-                  )
+                  SOUTH_AMERICA.includes(geography.id) &&
+                  <Geography
+                    key={i}
+                    geography={geography}
+                    projection={projection}
+                    style={{
+                      default: {
+                        fill: '#ECEFF1',
+                        stroke: '#607D8B',
+                        strokeWidth: 0.75,
+                        outline: 'none'
+                      },
+                      hover: {
+                        fill: '#00bcd4',
+                        stroke: '#607D8B',
+                        strokeWidth: 0.75,
+                        outline: 'none'
+                      },
+                      pressed: {
+                        fill: '#00bcd4',
+                        stroke: '#607D8B',
+                        strokeWidth: 0.75,
+                        outline: 'none'
+                      }
+                    }}
+                  />
               )}
           </Geographies>
           <Markers>
-            {this.state.cities.map((city, i) => (
+            {this.state.cities.map((city, i) =>
               <Marker
                 key={i}
                 marker={city}
                 style={{
                   default: { fill: popScale(city.temp) },
                   hover: { fill: popScale(city.temp) },
-                  pressed: { fill: popScale(city.temp) },
+                  pressed: { fill: popScale(city.temp) }
                 }}
               >
                 <circle cx={0} cy={0} r={20} />
                 <text
-                  textAnchor="middle"
+                  textAnchor='middle'
                   y={city.offset}
                   style={{
                     fontFamily: 'Roboto, sans-serif',
-                    fill: '#607D8B',
+                    fill: '#607D8B'
                   }}
                 >
                   {city.name} ({city.temp} ºC)
                 </text>
               </Marker>
-            ))}
+            )}
           </Markers>
         </ZoomableGroup>
       </ComposableMap>
     </div>
-  )
 }

@@ -46,7 +46,7 @@
     "lint": "standard-markdown && standard",
     "prelint": "npm run pretty",
     "pretest": "npm run lint",
-    "pretty": "prettier-standard index.js src/**/*.js test/**/*.js bin/**/*.js",
+    "pretty": "prettier-standard pages/**/*.js",
     "start": "next start",
     "test": "echo 'No tests found' && exit 0"
   },
