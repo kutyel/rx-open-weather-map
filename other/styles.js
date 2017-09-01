@@ -1,10 +1,15 @@
-export const wrapperStyles = {
+export const wrapper = {
   width: '100%',
   maxWidth: 980,
   margin: '0 auto',
 }
 
-export const mapStyles = {
+export const container = {
+  width: '100%',
+  height: 'auto',
+}
+
+export const map = {
   default: {
     fill: '#ECEFF1',
     stroke: '#607D8B',
@@ -25,7 +30,7 @@ export const mapStyles = {
   },
 }
 
-export const textStyle = {
+export const text = {
   fontFamily: 'Roboto, sans-serif',
   fill: '#607D8B',
 }
